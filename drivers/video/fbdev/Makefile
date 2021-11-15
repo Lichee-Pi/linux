@@ -6,6 +6,7 @@
 # Each configuration option enables a list of files.
 
 obj-y				+= core/
+obj-y               += fbtft/
 
 obj-$(CONFIG_FB_MACMODES)      += macmodes.o
 obj-$(CONFIG_FB_WMT_GE_ROPS)   += wmt_ge_rops.o

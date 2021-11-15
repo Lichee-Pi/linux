@@ -236,6 +236,8 @@ config FB_TILEBLITTING
 comment "Frame buffer hardware drivers"
 	depends on FB
 
+source "drivers/video/fbdev/fbtft/Kconfig"
+
 config FB_TFT
         bool "Support for small TFT LCD display modules"
         depends on FB && SPI && GPIOLIB
