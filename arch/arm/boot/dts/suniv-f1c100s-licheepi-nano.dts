@@ -10,8 +10,7 @@
 
 / {
 	model = "Lichee Pi Nano";
-	compatible = "licheepi,licheepi-nano", "allwinner,suniv-f1c100s",
-		     "allwinner,suniv";
+	compatible = "licheepi,licheepi-nano", "allwinner,suniv-f1c100s";
 
 	aliases {
 		serial0 = &uart0;
@@ -27,6 +26,13 @@
 		regulator-name = "vcc3v3";
 		regulator-min-microvolt = <3300000>;
 		regulator-max-microvolt = <3300000>;
+	};
+
+	backlight: backlight {
+	compatible = "pwm-backlight";
+	pwms = <&pwm 1 50000 0>;
+	brightness-levels = <0 4 8 16 32 64 128 255>;
+	default-brightness-level = <8>;
 	};
 };
 
@@ -55,9 +61,30 @@
 	};
 };
 
+&spi1 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&spi1_pins_a>;
+	status = "okay";
+
+	spi_lcd@0 {
+		#address-cells = <1>;
+		#size-cells = <1>;
+		rotate = <0>;
+		fps = <30>;
+		buswidth = <8>;
+		bgr;
+		dc-gpios = <&pio 4 4 GPIO_ACTIVE_HIGH>; //PE4
+		reset-gpios = <&pio 4 3 GPIO_ACTIVE_LOW>; //PE3
+		debug = <0x0>;
+		compatible = "ilitek,ili9341";
+		reg = <0>;
+		spi-max-frequency = <40000000>;
+	};
+};
+
 &uart0 {
 	pinctrl-names = "default";
-	pinctrl-0 = <&uart0_pins_a>;
+	pinctrl-0 = <&uart0_pe_pins>;
 	status = "okay";
 };
 
